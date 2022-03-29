@@ -6,6 +6,7 @@ html, body, *{
 
 html, body{
     box-sizing: border-box;
+    background: #fefefe;
 }
 
 .contenedor{
@@ -24,10 +25,6 @@ html, body{
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.25rem;
     border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
 }
 
 input{
@@ -39,6 +36,10 @@ input{
 
 input::placeholder{
     color: #000;
+}
+
+input[disabled]{
+    background: #fcfcfc;
 }
 
 .caja{

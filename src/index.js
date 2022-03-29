@@ -8,11 +8,14 @@ let numero = '',
     numeros = [],
     operador = '',
     operadores = [],
-    texto = '',
+    texto = '0',
     pulsarIgual = false,
     pulsarOperador = false,
+    ponerPunto = true,
     resultadoEnPantalla = false,
     resultado = 0;
+
+input.placeholder = texto;
 
 
 const eventoClickCajas = (i) => {
@@ -20,27 +23,32 @@ const eventoClickCajas = (i) => {
 
         console.log('click');
 
+
+
         // cuando se pulsa un numero
         if (cajas[i].innerText == 0 || cajas[i].innerText == 1 || cajas[i].innerText == 2
             || cajas[i].innerText == 3 || cajas[i].innerText == 4 || cajas[i].innerText == 5
             || cajas[i].innerText == 6 || cajas[i].innerText == 7 || cajas[i].innerText == 8
-            || cajas[i].innerText == 9 || cajas[i].innerText == '.'
+            || cajas[i].innerText == 9
         ) {
             console.log('click en numeros');
 
+            /* evaluar si lo que aparece es un 0 y lo limpia para ingresar
+            los nuevos numeros */
+            if (input.placeholder == '0') {
+                texto = '';
+                input.placeholder = texto;
+            }
+
             /* si el resultado se esta mostrando en pantalla y se pulsa un 
             numero, se reinicia todo */
-            if(resultadoEnPantalla){
+            if (resultadoEnPantalla) {
                 texto = ``;
                 input.placeholder = texto;
                 numeros = [];
                 operadores = [];
                 resultadoEnPantalla = false;
             }
-
-            // if(cajas[i].innerText == '.'){
-            //     numero = `${numero}.`;
-            // }
 
             numero = Number(`${numero}${cajas[i].innerText}`);
             console.log(numero);
@@ -51,6 +59,26 @@ const eventoClickCajas = (i) => {
             pulsarOperador = true;
             pulsarIgual = true;
 
+        }
+
+
+        // si se pulsa la tecla .
+        if (cajas[i].innerText == '.') {
+            if (ponerPunto) {
+                if (resultadoEnPantalla) {
+                    texto = ``;
+                    input.placeholder = texto;
+                    numeros = [];
+                    operadores = [];
+                    resultadoEnPantalla = false;
+                }
+
+                numero = `${numero}.`
+                texto = `${texto}.`
+                input.placeholder = texto;
+
+            }
+            ponerPunto = false;
         }
 
 
@@ -76,6 +104,7 @@ const eventoClickCajas = (i) => {
                 pulsarOperador = false;
                 pulsarIgual = false;
                 resultadoEnPantalla = false;
+                ponerPunto = true;
 
                 console.log(numeros);
                 console.log(operadores);
@@ -127,6 +156,7 @@ const eventoClickCajas = (i) => {
                 resultado = 0;
                 operadores = [];
                 resultadoEnPantalla = true;
+                ponerPunto = true;
                 console.log(numeros);
                 console.log(operadores);
             }
@@ -135,7 +165,7 @@ const eventoClickCajas = (i) => {
 
 
         // cuando se pulsa AC, resetea todo
-        if(cajas[i].innerText == 'AC'){
+        if (cajas[i].innerText == 'AC') {
             resetear();
         }
 
@@ -153,13 +183,14 @@ for (let i = 0; i < cajas.length; i++) {
 // metodo para poner valores por defecto
 const resetear = () => {
     numero = '',
-    numeros = [],
-    operador = '',
-    operadores = [],
-    texto = '',
-    pulsarIgual = false,
-    pulsarOperador = false,
-    resultadoEnPantalla = false,
-    resultado = 0;
+        numeros = [],
+        operador = '',
+        operadores = [],
+        texto = '0',
+        pulsarIgual = false,
+        pulsarOperador = false,
+        resultadoEnPantalla = false,
+        resultado = 0;
+    ponerPunto = true;
     input.placeholder = texto;
 } 

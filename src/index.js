@@ -156,6 +156,11 @@ const eventoClickCajas = (i) => {
                         console.log(resultado);
                     }
 
+                    if (operadores[j - 1] == '^') {
+                        resultado = Math.pow(resultado, numeros[j]);
+                        console.log(resultado);
+                    }
+
                 }
 
                 numeros = [];

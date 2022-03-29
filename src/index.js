@@ -9,6 +9,7 @@ let numero = '',
     operador = '',
     operadores = [],
     texto = '0',
+    // borrarNumero = true,
     pulsarIgual = false,
     pulsarOperador = false,
     ponerPunto = true,
@@ -56,6 +57,7 @@ const eventoClickCajas = (i) => {
             texto = `${texto}${cajas[i].innerText}`;
             input.placeholder = texto;
 
+            // borrarNumero = true;
             pulsarOperador = true;
             pulsarIgual = true;
 
@@ -95,12 +97,13 @@ const eventoClickCajas = (i) => {
                     numero = '';
                 }
 
-                texto = `${texto} ${cajas[i].innerText} `;
+                texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
 
                 operador = cajas[i].innerText;
                 operadores.push(operador);
 
+                // borrarNumero = false;
                 pulsarOperador = false;
                 pulsarIgual = false;
                 resultadoEnPantalla = false;
@@ -161,6 +164,32 @@ const eventoClickCajas = (i) => {
                 console.log(operadores);
             }
             pulsarIgual = false;
+        }
+
+
+        // cuando se pulsa borrar
+        if (cajas[i].innerText == 'Borrar') {
+            
+            if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
+            || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
+            || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
+                || texto.at(-1) == 9
+            ) {
+                numero = String(numero);
+                numero = numero.slice(0, -1);
+                numero = Number(numero);
+                console.log(numero);
+            } else {
+                operadores.pop();
+                console.log(operadores);
+                pulsarOperador = true;
+            }
+
+            if (input.placeholder == 0) {
+            } else {
+                texto = texto.slice(0, -1);
+                input.placeholder = texto;
+            }
         }
 
 

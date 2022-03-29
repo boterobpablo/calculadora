@@ -131,27 +131,63 @@ const eventoClickCajas = (i) => {
                     numero = '';
                 }
 
+                
+
+                // si viene el operador ^ en el arreglo de operadores, dar prioridad
+                while (operadores.includes('^')) {
+                    let indiceOperador = operadores.indexOf('^');
+                    let res = Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
+                    // if (indiceOperador == 0) {
+                    // } else {
+                    //     resultado = resultado + Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
+                    // }
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 0, res);
+                    operadores.splice(indiceOperador, 1);
+                    console.log('^',numeros);
+                    console.log('^',operadores);
+                    console.log('^',resultado);
+                }
+                
+                // si viene el operador * en el arreglo de operadores, dar prioridad
+                while (operadores.includes('*')) {
+                    let indiceOperador = operadores.indexOf('*');
+                    let res = numeros[indiceOperador] * numeros[indiceOperador + 1];
+                    // if (indiceOperador == 0) {
+                    //     resultado = numeros[indiceOperador] * numeros[indiceOperador + 1];
+                    // } else {
+                    //     resultado = resultado + (numeros[indiceOperador] * numeros[indiceOperador + 1]);
+                    // }
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 0, res);
+                    operadores.splice(indiceOperador, 1);
+                    console.log('*',numeros);
+                    console.log('*',operadores);
+                    console.log('*',resultado);
+                }
+                
+                // si viene el operador / en el arreglo de operadores, dar prioridad
+                while (operadores.includes('/')) {
+                    let indiceOperador = operadores.indexOf('/');
+                    let res = numeros[indiceOperador] / numeros[indiceOperador + 1];
+                    // if (indiceOperador == 0) {
+                    //     resultado = numeros[indiceOperador] / numeros[indiceOperador + 1];
+                    // } else {
+                    //     resultado = resultado + (numeros[indiceOperador] / numeros[indiceOperador + 1]);
+                    // }
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 0, res);
+                    operadores.splice(indiceOperador, 1);
+                    console.log('/',numeros);
+                    console.log('/',operadores);
+                    console.log('/',resultado);
+                }
+
                 resultado = resultado + numeros[0];
                 console.log(resultado);
-
-                if (operadores.includes('^')) {
-                    let indiceOperador = operadores.indexOf('^');
-                    console.log('indice', indiceOperador);
-                    if (indiceOperador == 0) {
-                        resultado = Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
-                    } else {
-                        resultado = resultado + Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
-                    }
-                    console.log(resultado);
-                    console.log(numeros);
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 1);
-                    operadores.splice(indiceOperador, 1);
-                    operadores.splice(indiceOperador - 1, 1);
-                    indiceOperador = 0;
-                    console.log(numeros);
-                    console.log(operadores);
-                }
 
                 for (let j = 1; j < numeros.length; j++) {
 
@@ -165,15 +201,15 @@ const eventoClickCajas = (i) => {
                         console.log(resultado);
                     }
 
-                    if (operadores[j - 1] == '*') {
-                        resultado = resultado * numeros[j];
-                        console.log(resultado);
-                    }
+                    // if (operadores[j - 1] == '*') {
+                    //     resultado = resultado * numeros[j];
+                    //     console.log(resultado);
+                    // }
 
-                    if (operadores[j - 1] == '/') {
-                        resultado = resultado / numeros[j];
-                        console.log(resultado);
-                    }
+                    // if (operadores[j - 1] == '/') {
+                    //     resultado = resultado / numeros[j];
+                    //     console.log(resultado);
+                    // }
 
                     // if (operadores[j - 1] == '^') {
                     //     resultado = Math.pow(resultado, numeros[j]);
@@ -226,6 +262,8 @@ const eventoClickCajas = (i) => {
                 numeros = [];
                 numeros.push(resultado);
 
+                /* manejar decimales, cuando paso de string a number o
+                viceversa, lo hago para usar los metodos de uno o de otro */
                 resultado = String(resultado);
                 if (resultado.includes('.')) {
                     resultado = Number(resultado);
@@ -254,7 +292,8 @@ const eventoClickCajas = (i) => {
         // cuando se pulsa borrar
         if (cajas[i].innerText == 'Borrar') {
 
-            // si el ultimo registro es un nmero y se va a borrar
+            console.log('click borrar');
+            // si el ultimo registro es un numero y se va a borrar
             if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
                 || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
                 || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
@@ -268,12 +307,13 @@ const eventoClickCajas = (i) => {
 
                 texto = texto.slice(0, -1);
                 input.placeholder = texto;
-                if (texto.at(-1) == '+' || texto.at(-1) == '-'
-                    || texto.at(-1) == '*' || texto.at(-1) == '/'
-                    || texto.at(-1) == '^'
-                ) {
-                    numeros.pop();
-                }
+                // if (texto.at(-1) == '+' || texto.at(-1) == '-'
+                //     || texto.at(-1) == '*' || texto.at(-1) == '/'
+                //     || texto.at(-1) == '^'
+                // ) {
+                //     numeros.pop();
+                //     console.log(numeros);
+                // }
 
                 // si es un operador y se va a borrar
             } else {

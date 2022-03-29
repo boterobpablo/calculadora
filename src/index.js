@@ -134,6 +134,25 @@ const eventoClickCajas = (i) => {
                 resultado = resultado + numeros[0];
                 console.log(resultado);
 
+                if (operadores.includes('^')) {
+                    let indiceOperador = operadores.indexOf('^');
+                    console.log('indice', indiceOperador);
+                    if (indiceOperador == 0) {
+                        resultado = Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
+                    } else {
+                        resultado = resultado + Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
+                    }
+                    console.log(resultado);
+                    console.log(numeros);
+                    numeros.splice(indiceOperador, 1);
+                    numeros.splice(indiceOperador, 1);
+                    operadores.splice(indiceOperador, 1);
+                    operadores.splice(indiceOperador - 1, 1);
+                    indiceOperador = 0;
+                    console.log(numeros);
+                    console.log(operadores);
+                }
+
                 for (let j = 1; j < numeros.length; j++) {
 
                     if (operadores[j - 1] == '+') {
@@ -156,11 +175,10 @@ const eventoClickCajas = (i) => {
                         console.log(resultado);
                     }
 
-                    if (operadores[j - 1] == '^') {
-                        resultado = Math.pow(resultado, numeros[j]);
-                        console.log(resultado);
-                    }
-
+                    // if (operadores[j - 1] == '^') {
+                    //     resultado = Math.pow(resultado, numeros[j]);
+                    //     console.log(resultado);
+                    // }
                 }
 
                 numeros = [];
@@ -185,8 +203,8 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = true;
                 ponerPunto = true;
-                console.log(numeros);
-                console.log(operadores);
+                console.log('numeros', numeros);
+                console.log('operadores', operadores);
             }
             pulsarIgual = false;
             // pulsarRaiz = true;
@@ -236,6 +254,7 @@ const eventoClickCajas = (i) => {
         // cuando se pulsa borrar
         if (cajas[i].innerText == 'Borrar') {
 
+            // si el ultimo registro es un nmero y se va a borrar
             if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
                 || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
                 || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
@@ -245,17 +264,32 @@ const eventoClickCajas = (i) => {
                 numero = numero.slice(0, -1);
                 numero = Number(numero);
                 console.log(numero);
+                console.log(numeros);
+
+                texto = texto.slice(0, -1);
+                input.placeholder = texto;
+                if (texto.at(-1) == '+' || texto.at(-1) == '-'
+                    || texto.at(-1) == '*' || texto.at(-1) == '/'
+                    || texto.at(-1) == '^'
+                ) {
+                    numeros.pop();
+                }
+
+                // si es un operador y se va a borrar
             } else {
                 operadores.pop();
                 console.log(operadores);
+                texto = texto.slice(0, -1);
+                input.placeholder = texto;
                 pulsarOperador = true;
             }
 
             if (input.placeholder == 0) {
-            } else {
-                texto = texto.slice(0, -1);
-                input.placeholder = texto;
             }
+            // else {
+            //     texto = texto.slice(0, -1);
+            //     input.placeholder = texto;
+            // }
 
             if (texto.at(-1) == '.') {
                 texto = texto.slice(0, -1);

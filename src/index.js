@@ -12,6 +12,7 @@ let numero = '',
     // borrarNumero = true,
     pulsarIgual = false,
     pulsarOperador = false,
+    // pulsarRaiz = false,
     ponerPunto = true,
     resultadoEnPantalla = false,
     resultado = 0;
@@ -60,6 +61,7 @@ const eventoClickCajas = (i) => {
             // borrarNumero = true;
             pulsarOperador = true;
             pulsarIgual = true;
+            // pulsarRaiz = true;
 
         }
 
@@ -87,7 +89,7 @@ const eventoClickCajas = (i) => {
         // cuando se pulsa un operador
         if (cajas[i].innerText == '+' || cajas[i].innerText == '-'
             || cajas[i].innerText == '*' || cajas[i].innerText == '/'
-            || cajas[i].innerText == '^' || cajas[i].innerText == 'Raiz'
+            || cajas[i].innerText == '^'
         ) {
             if (pulsarOperador) {
                 console.log('click en operadores');
@@ -105,7 +107,8 @@ const eventoClickCajas = (i) => {
 
                 // borrarNumero = false;
                 pulsarOperador = false;
-                pulsarIgual = false;
+                pulsarIgual = true;
+                // pulsarRaiz = false;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
 
@@ -122,9 +125,11 @@ const eventoClickCajas = (i) => {
 
                 console.log('click en igual');
 
-                numeros.push(numero);
-                console.log(numeros);
-                numero = '';
+                if (!numero == '') {
+                    numeros.push(numero);
+                    console.log(numeros);
+                    numero = '';
+                }
 
                 resultado = resultado + numeros[0];
                 console.log(resultado);
@@ -150,12 +155,27 @@ const eventoClickCajas = (i) => {
                         resultado = resultado / numeros[j];
                         console.log(resultado);
                     }
+
+                }
+
+                numeros = [];
+                numeros.push(resultado);
+
+                /* manejar decimales, cuando paso de string a number o
+                viceversa, lo hago para usar los metodos de uno o de otro */
+                resultado = String(resultado);
+                if (resultado.includes('.')) {
+                    resultado = Number(resultado);
+                    resultado = resultado.toFixed(5);
+                    resultado = String(resultado);
+                    while (resultado.at(-1) == '0') {
+                        resultado = resultado.slice(0, -1);
+                    }
                 }
 
                 texto = `${resultado}`;
                 input.placeholder = texto;
-                numeros = [];
-                numeros.push(resultado);
+
                 resultado = 0;
                 operadores = [];
                 resultadoEnPantalla = true;
@@ -164,15 +184,56 @@ const eventoClickCajas = (i) => {
                 console.log(operadores);
             }
             pulsarIgual = false;
+            // pulsarRaiz = true;
+        }
+
+
+        // cuando pulso raiz
+        if (cajas[i].innerText == 'Raiz') {
+            if (numeros.length <= 1) {
+
+                if (!numero == '') {
+                    numeros.push(numero);
+                    numero = '';
+                }
+
+                resultado = Math.sqrt(numeros[0]);
+                console.log(resultado);
+
+                numeros = [];
+                numeros.push(resultado);
+
+                resultado = String(resultado);
+                if (resultado.includes('.')) {
+                    resultado = Number(resultado);
+                    resultado = resultado.toFixed(5);
+                    resultado = String(resultado);
+                    while (resultado.at(-1) == '0') {
+                        resultado = resultado.slice(0, -1);
+                    }
+                }
+
+                texto = `${resultado}`;
+                input.placeholder = texto;
+
+                resultado = 0;
+                operadores = [];
+                resultadoEnPantalla = true;
+                pulsarOperador = true;
+                ponerPunto = true;
+                // pulsarRaiz = false;
+                console.log(numeros);
+                console.log(operadores);
+            }
         }
 
 
         // cuando se pulsa borrar
         if (cajas[i].innerText == 'Borrar') {
-            
+
             if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
-            || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
-            || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
+                || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
+                || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
                 || texto.at(-1) == 9
             ) {
                 numero = String(numero);
@@ -189,6 +250,12 @@ const eventoClickCajas = (i) => {
             } else {
                 texto = texto.slice(0, -1);
                 input.placeholder = texto;
+            }
+
+            if (texto.at(-1) == '.') {
+                texto = texto.slice(0, -1);
+                input.placeholder = texto;
+                ponerPunto = true;
             }
         }
 
@@ -211,15 +278,16 @@ for (let i = 0; i < cajas.length; i++) {
 
 // metodo para poner valores por defecto
 const resetear = () => {
-    numero = '',
-        numeros = [],
-        operador = '',
-        operadores = [],
-        texto = '0',
-        pulsarIgual = false,
-        pulsarOperador = false,
-        resultadoEnPantalla = false,
-        resultado = 0;
-    ponerPunto = true;
+    numero = '';
+    numeros = [];
+    operador = '';
+    operadores = [];
+    texto = '0';
     input.placeholder = texto;
+    pulsarIgual = false;
+    pulsarOperador = false;
+    ponerPunto = true;
+    // pulsarRaiz = false;
+    resultadoEnPantalla = false;
+    resultado = 0;
 } 

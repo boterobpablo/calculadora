@@ -22,6 +22,10 @@ input.placeholder = texto;
 const eventoClickCajas = (i) => {
     cajas[i].addEventListener('click', () => {
 
+        // if (input.placeholder.length == 25) {
+        //     return;
+        // }
+
         console.log('click');
 
         // cuando se pulsa un numero
@@ -48,7 +52,6 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = false;
             }
-
 
             numero = Number(`${numero}${cajas[i].innerText}`);
             console.log(numero);
@@ -284,21 +287,16 @@ const eventoClickCajas = (i) => {
                     console.log(String(numeros.at(-1)).length);
                     console.log('ultimo numero', num);
 
-                    if (num.length == 1) numeros.pop();
+                    numeros.pop()
 
                     if (num.length > 1) {
-                        numeros.pop();
                         num = num.slice(0, -1);
                         num = Number(num);
                         console.log('borrar array', num);
-                        numeros.push(num);
+                        numero = num;
                     }
 
-                    if (texto.at(-1) == '+' || texto.at(-1) == '-' || texto.at(-1) == '*'
-                        || texto.at(-1) == '/' || texto.at(-1) == '^'
-                    ) {
-                        borrarNumeroArray = false;
-                    }
+                    borrarNumeroArray = false;
                 }
 
                 console.log(numeros);
@@ -337,6 +335,12 @@ const eventoClickCajas = (i) => {
 for (let i = 0; i < cajas.length; i++) {
     eventoClickCajas(i);
 }
+
+
+// metodo borrar
+// const borrar = () => {
+
+// }
 
 
 // metodo para poner valores por defecto

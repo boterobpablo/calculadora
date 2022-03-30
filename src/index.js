@@ -152,8 +152,6 @@ const eventoClickCajas = (i) => {
                     numero = '';
                 }
 
-
-
                 // si viene el operador ^ en el arreglo de operadores, dar prioridad
                 while (operadores.includes('^')) {
                     let indiceOperador = operadores.indexOf('^');
@@ -348,17 +346,13 @@ const eventoClickCajas = (i) => {
                         console.log('borrar array', num);
                         numeros.push(num);
                     }
-                    
+
                     if (texto.at(-1) == '+' || texto.at(-1) == '-' || texto.at(-1) == '*'
                         || texto.at(-1) == '/' || texto.at(-1) == '^'
                     ) {
                         borrarNumeroArray = false;
                     }
                 }
-
-                // if(num.length > 1){
-
-                // }
 
                 console.log(numeros);
 

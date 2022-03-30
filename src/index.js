@@ -59,16 +59,17 @@ const eventoClickCajas = (i) => {
             //     || input.placeholder.at(-1) == 6 || input.placeholder.at(-1) == 7 || input.placeholder.at(-1) == 8
             //     || input.placeholder.at(-1) == 9
             // ) {
-            //     while (input.placeholder.at(k) == 0 || input.placeholder.at(k) == 1 || input.placeholder.at(k) == 2
-            //     || input.placeholder.at(k) == 3 || input.placeholder.at(k) == 4 || input.placeholder.at(k) == 5
-            //     || input.placeholder.at(k) == 6 || input.placeholder.at(k) == 7 || input.placeholder.at(k) == 8
-            //         || input.placeholder.at(k) == 9
-            //     ){
-            //         k = -1;
-            //         let num = input.placeholder.at(k);
-            //         numero = Number(`${num}${cajas[i].innerText}`);
-            //         k--
-            //     }
+            // while (input.placeholder.at(k) == 0 || input.placeholder.at(k) == 1 || input.placeholder.at(k) == 2
+            // || input.placeholder.at(k) == 3 || input.placeholder.at(k) == 4 || input.placeholder.at(k) == 5
+            // || input.placeholder.at(k) == 6 || input.placeholder.at(k) == 7 || input.placeholder.at(k) == 8
+            //     || input.placeholder.at(k) == 9
+            // ){
+            //     k = -1;
+            //     let num = input.placeholder.at(k);
+            //     console.log(num);
+            //     numero = Number(`${num}${cajas[i].innerText}`);
+            //     k--
+            // }
             // }
 
             numero = Number(`${numero}${cajas[i].innerText}`);
@@ -130,7 +131,7 @@ const eventoClickCajas = (i) => {
                 // pulsarRaiz = false;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
-                borrarNumeroArray = true;
+                // borrarNumeroArray = true;
 
                 console.log(numeros);
                 console.log(operadores);
@@ -259,6 +260,7 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = true;
                 ponerPunto = true;
+                borrarNumeroArray = false;
                 console.log('numeros', numeros);
                 console.log('operadores', operadores);
             }
@@ -302,6 +304,7 @@ const eventoClickCajas = (i) => {
                 resultadoEnPantalla = true;
                 pulsarOperador = true;
                 ponerPunto = true;
+                borrarNumeroArray = false;
                 // pulsarRaiz = false;
                 console.log(numeros);
                 console.log(operadores);
@@ -323,22 +326,41 @@ const eventoClickCajas = (i) => {
                 numero = numero.slice(0, -1);
                 numero = Number(numero);
                 console.log(numero);
-                console.log(numeros);
 
                 texto = texto.slice(0, -1);
                 input.placeholder = texto;
+
+                let num = numeros.at(-1);
+                num = String(num);
+
+                // borrar numero del array
                 if (borrarNumeroArray) {
 
-                    // if (texto.at(-1) == '+' || texto.at(-1) == '-'
-                    //     || texto.at(-1) == '*' || texto.at(-1) == '/'
-                    //     || texto.at(-1) == '^'
-                    // ) {
-                    //     numeros.pop();
-                    //     console.log(numeros);
-                    // }
-                    numeros.pop();
-                    borrarNumeroArray = false;
+                    console.log(String(numeros.at(-1)).length);
+                    console.log('ultimo numero', num);
+
+                    if (num.length == 1) numeros.pop();
+
+                    if (num.length > 1) {
+                        numeros.pop();
+                        num = num.slice(0, -1);
+                        num = Number(num);
+                        console.log('borrar array', num);
+                        numeros.push(num);
+                    }
+                    
+                    if (texto.at(-1) == '+' || texto.at(-1) == '-' || texto.at(-1) == '*'
+                        || texto.at(-1) == '/' || texto.at(-1) == '^'
+                    ) {
+                        borrarNumeroArray = false;
+                    }
                 }
+
+                // if(num.length > 1){
+
+                // }
+
+                console.log(numeros);
 
                 // si es un operador y se va a borrar
             } else {
@@ -346,24 +368,11 @@ const eventoClickCajas = (i) => {
                 console.log(operadores);
                 texto = texto.slice(0, -1);
                 input.placeholder = texto;
-                // if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
-                //     || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
-                //     || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
-                //     || texto.at(-1) == 9
-                // ) {
-                //     numeros.pop();
-                //     console.log(numeros);
-                // }
                 pulsarOperador = true;
                 borrarNumeroArray = true;
             }
 
-            if (input.placeholder == 0) {
-            }
-            // else {
-            //     texto = texto.slice(0, -1);
-            //     input.placeholder = texto;
-            // }
+            if (input.placeholder == 0) { }
 
             if (texto.at(-1) == '.') {
                 texto = texto.slice(0, -1);
@@ -403,4 +412,5 @@ const resetear = () => {
     // pulsarRaiz = false;
     resultadoEnPantalla = false;
     resultado = 0;
+    borrarNumeroArray = false;
 } 

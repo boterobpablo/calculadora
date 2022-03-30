@@ -11,6 +11,7 @@ let numero = '',
     texto = '0',
     borrarNumeroArray = false,
     pulsarIgual = false,
+    // pulsarNumero = true,
     pulsarOperador = false,
     ponerPunto = true,
     resultadoEnPantalla = false,
@@ -22,12 +23,16 @@ input.placeholder = texto;
 const eventoClickCajas = (i) => {
     cajas[i].addEventListener('click', () => {
 
+        // comprobar que no se ingresen mas de 25 caracteres en pantalla
         if (input.placeholder.length == 25) {
-            // cuando se pulsa borrar
             if (cajas[i].innerText == 'Borrar') {
                 borrar();
+            } else if (cajas[i].innerText == 'AC') {
+                resetear();
+            } else {
+                return;
             }
-            return;
+
         }
 
         console.log('click');
@@ -40,40 +45,44 @@ const eventoClickCajas = (i) => {
         ) {
             console.log('click en numeros');
 
-            // if (numero.length == 17) {
-            //     // cuando se pulsa borrar
-            //     if (cajas[i].innerText == 'Borrar') {
-            //         borrar();
-            //     }
-            //     return;
-            // }
+            /* funcion auto invocada para poder controlar el numero maximo de 
+            caracteres por numero */
+            (() => {
 
-            /* evaluar si lo que aparece es un 0 y lo limpia para ingresar
-            los nuevos numeros */
-            if (input.placeholder == '0') {
-                texto = '';
+                // controlar que el numero no tenga mas de 16 caracteres
+                let cantidadNumeros = String(numero);
+                if (cantidadNumeros.length >= 16) {
+                    input.placeholder = 'Número demasiado grande', 1000
+                    setTimeout(() => resetear(), 2000)
+                    return;
+                }
+
+                /* evaluar si lo que aparece es un 0 y lo limpia para ingresar
+                los nuevos numeros */
+                if (input.placeholder == '0') {
+                    texto = '';
+                    input.placeholder = texto;
+                }
+
+                /* si el resultado se esta mostrando en pantalla y se pulsa un 
+                numero, se reinicia todo */
+                if (resultadoEnPantalla) {
+                    texto = ``;
+                    input.placeholder = texto;
+                    numeros = [];
+                    operadores = [];
+                    resultadoEnPantalla = false;
+                }
+
+                numero = Number(`${numero}${cajas[i].innerText}`);
+                console.log(numero);
+
+                texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
-            }
 
-            /* si el resultado se esta mostrando en pantalla y se pulsa un 
-            numero, se reinicia todo */
-            if (resultadoEnPantalla) {
-                texto = ``;
-                input.placeholder = texto;
-                numeros = [];
-                operadores = [];
-                resultadoEnPantalla = false;
-            }
-
-            numero = Number(`${numero}${cajas[i].innerText}`);
-            console.log(numero);
-
-            texto = `${texto}${cajas[i].innerText}`;
-            input.placeholder = texto;
-
-            pulsarOperador = true;
-            pulsarIgual = true;
-
+                pulsarOperador = true;
+                pulsarIgual = true;
+            })();
         }
 
 
@@ -120,6 +129,7 @@ const eventoClickCajas = (i) => {
                 pulsarIgual = true;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
+                // pulsarNumero = true;
 
                 console.log(numeros);
                 console.log(operadores);
@@ -222,6 +232,7 @@ const eventoClickCajas = (i) => {
                 resultadoEnPantalla = true;
                 ponerPunto = true;
                 borrarNumeroArray = false;
+                // pulsarNumero = true;
                 console.log('numeros', numeros);
                 console.log('operadores', operadores);
             }
@@ -258,13 +269,19 @@ const eventoClickCajas = (i) => {
 
                 texto = `${resultado}`;
                 input.placeholder = texto;
+                console.log('texto',texto);
+
+                texto == 'NaN'
+                    ? pulsarOperador = false
+                    : pulsarOperador = true;
 
                 resultado = 0;
                 operadores = [];
                 resultadoEnPantalla = true;
-                pulsarOperador = true;
+                // pulsarOperador = true;
                 ponerPunto = true;
                 borrarNumeroArray = false;
+                // pulsarNumero = true;
                 console.log(numeros);
                 console.log(operadores);
             }
@@ -312,6 +329,11 @@ const borrar = () => {
         texto = texto.slice(0, -1);
         input.placeholder = texto;
 
+        if (texto.length == 0) {
+            texto = '0';
+            input.placeholder = texto;
+        }
+
         let num = numeros.at(-1);
         num = String(num);
 
@@ -333,6 +355,7 @@ const borrar = () => {
             borrarNumeroArray = false;
         }
 
+        // pulsarNumero = true
         console.log(numeros);
 
         // si es un operador y se va a borrar
@@ -352,6 +375,13 @@ const borrar = () => {
         input.placeholder = texto;
         ponerPunto = true;
     }
+
+    if (texto == 'Na') { 
+        texto = '0'
+        input.placeholder = texto
+        resetear()
+    }
+
 }
 
 
@@ -365,8 +395,10 @@ const resetear = () => {
     input.placeholder = texto;
     pulsarIgual = false;
     pulsarOperador = false;
+    // pulsarNumero = true;
     ponerPunto = true;
     resultadoEnPantalla = false;
     resultado = 0;
     borrarNumeroArray = false;
+    // pulsarNumero = true;
 } 

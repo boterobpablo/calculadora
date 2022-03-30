@@ -10,12 +10,14 @@ let numero = '',
     operadores = [],
     texto = '0',
     // borrarNumero = true,
+    borrarNumeroArray = false,
     pulsarIgual = false,
     pulsarOperador = false,
     // pulsarRaiz = false,
     ponerPunto = true,
     resultadoEnPantalla = false,
-    resultado = 0;
+    resultado = 0,
+    k = -1;
 
 input.placeholder = texto;
 
@@ -51,6 +53,23 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = false;
             }
+
+            // if (input.placeholder.at(-1) == 0 || input.placeholder.at(-1) == 1 || input.placeholder.at(-1) == 2
+            //     || input.placeholder.at(-1) == 3 || input.placeholder.at(-1) == 4 || input.placeholder.at(-1) == 5
+            //     || input.placeholder.at(-1) == 6 || input.placeholder.at(-1) == 7 || input.placeholder.at(-1) == 8
+            //     || input.placeholder.at(-1) == 9
+            // ) {
+            //     while (input.placeholder.at(k) == 0 || input.placeholder.at(k) == 1 || input.placeholder.at(k) == 2
+            //     || input.placeholder.at(k) == 3 || input.placeholder.at(k) == 4 || input.placeholder.at(k) == 5
+            //     || input.placeholder.at(k) == 6 || input.placeholder.at(k) == 7 || input.placeholder.at(k) == 8
+            //         || input.placeholder.at(k) == 9
+            //     ){
+            //         k = -1;
+            //         let num = input.placeholder.at(k);
+            //         numero = Number(`${num}${cajas[i].innerText}`);
+            //         k--
+            //     }
+            // }
 
             numero = Number(`${numero}${cajas[i].innerText}`);
             console.log(numero);
@@ -111,6 +130,7 @@ const eventoClickCajas = (i) => {
                 // pulsarRaiz = false;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
+                borrarNumeroArray = true;
 
                 console.log(numeros);
                 console.log(operadores);
@@ -131,7 +151,7 @@ const eventoClickCajas = (i) => {
                     numero = '';
                 }
 
-                
+
 
                 // si viene el operador ^ en el arreglo de operadores, dar prioridad
                 while (operadores.includes('^')) {
@@ -145,11 +165,11 @@ const eventoClickCajas = (i) => {
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 0, res);
                     operadores.splice(indiceOperador, 1);
-                    console.log('^',numeros);
-                    console.log('^',operadores);
-                    console.log('^',resultado);
+                    console.log('^', numeros);
+                    console.log('^', operadores);
+                    console.log('^', resultado);
                 }
-                
+
                 // si viene el operador * en el arreglo de operadores, dar prioridad
                 while (operadores.includes('*')) {
                     let indiceOperador = operadores.indexOf('*');
@@ -163,11 +183,11 @@ const eventoClickCajas = (i) => {
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 0, res);
                     operadores.splice(indiceOperador, 1);
-                    console.log('*',numeros);
-                    console.log('*',operadores);
-                    console.log('*',resultado);
+                    console.log('*', numeros);
+                    console.log('*', operadores);
+                    console.log('*', resultado);
                 }
-                
+
                 // si viene el operador / en el arreglo de operadores, dar prioridad
                 while (operadores.includes('/')) {
                     let indiceOperador = operadores.indexOf('/');
@@ -181,9 +201,9 @@ const eventoClickCajas = (i) => {
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 0, res);
                     operadores.splice(indiceOperador, 1);
-                    console.log('/',numeros);
-                    console.log('/',operadores);
-                    console.log('/',resultado);
+                    console.log('/', numeros);
+                    console.log('/', operadores);
+                    console.log('/', resultado);
                 }
 
                 resultado = resultado + numeros[0];
@@ -307,13 +327,18 @@ const eventoClickCajas = (i) => {
 
                 texto = texto.slice(0, -1);
                 input.placeholder = texto;
-                // if (texto.at(-1) == '+' || texto.at(-1) == '-'
-                //     || texto.at(-1) == '*' || texto.at(-1) == '/'
-                //     || texto.at(-1) == '^'
-                // ) {
-                //     numeros.pop();
-                //     console.log(numeros);
-                // }
+                if (borrarNumeroArray) {
+
+                    // if (texto.at(-1) == '+' || texto.at(-1) == '-'
+                    //     || texto.at(-1) == '*' || texto.at(-1) == '/'
+                    //     || texto.at(-1) == '^'
+                    // ) {
+                    //     numeros.pop();
+                    //     console.log(numeros);
+                    // }
+                    numeros.pop();
+                    borrarNumeroArray = false;
+                }
 
                 // si es un operador y se va a borrar
             } else {
@@ -321,7 +346,16 @@ const eventoClickCajas = (i) => {
                 console.log(operadores);
                 texto = texto.slice(0, -1);
                 input.placeholder = texto;
+                // if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
+                //     || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
+                //     || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
+                //     || texto.at(-1) == 9
+                // ) {
+                //     numeros.pop();
+                //     console.log(numeros);
+                // }
                 pulsarOperador = true;
+                borrarNumeroArray = true;
             }
 
             if (input.placeholder == 0) {

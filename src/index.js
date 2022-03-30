@@ -22,9 +22,13 @@ input.placeholder = texto;
 const eventoClickCajas = (i) => {
     cajas[i].addEventListener('click', () => {
 
-        // if (input.placeholder.length == 25) {
-        //     return;
-        // }
+        if (input.placeholder.length == 25) {
+            // cuando se pulsa borrar
+            if (cajas[i].innerText == 'Borrar') {
+                borrar();
+            }
+            return;
+        }
 
         console.log('click');
 
@@ -35,6 +39,14 @@ const eventoClickCajas = (i) => {
             || cajas[i].innerText == 9
         ) {
             console.log('click en numeros');
+
+            // if (numero.length == 17) {
+            //     // cuando se pulsa borrar
+            //     if (cajas[i].innerText == 'Borrar') {
+            //         borrar();
+            //     }
+            //     return;
+            // }
 
             /* evaluar si lo que aparece es un 0 y lo limpia para ingresar
             los nuevos numeros */
@@ -132,7 +144,7 @@ const eventoClickCajas = (i) => {
                 while (operadores.includes('^')) {
                     let indiceOperador = operadores.indexOf('^');
                     let res = Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
-                    
+
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 0, res);
@@ -146,7 +158,7 @@ const eventoClickCajas = (i) => {
                 while (operadores.includes('*')) {
                     let indiceOperador = operadores.indexOf('*');
                     let res = numeros[indiceOperador] * numeros[indiceOperador + 1];
-                    
+
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 0, res);
@@ -160,7 +172,7 @@ const eventoClickCajas = (i) => {
                 while (operadores.includes('/')) {
                     let indiceOperador = operadores.indexOf('/');
                     let res = numeros[indiceOperador] / numeros[indiceOperador + 1];
-                    
+
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 1);
                     numeros.splice(indiceOperador, 0, res);
@@ -261,63 +273,7 @@ const eventoClickCajas = (i) => {
 
         // cuando se pulsa borrar
         if (cajas[i].innerText == 'Borrar') {
-
-            console.log('click borrar');
-
-            // si el ultimo registro es un numero y se va a borrar
-            if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
-                || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
-                || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
-                || texto.at(-1) == 9
-            ) {
-                numero = String(numero);
-                numero = numero.slice(0, -1);
-                numero = Number(numero);
-                console.log(numero);
-
-                texto = texto.slice(0, -1);
-                input.placeholder = texto;
-
-                let num = numeros.at(-1);
-                num = String(num);
-
-                // borrar numero del array
-                if (borrarNumeroArray) {
-
-                    console.log(String(numeros.at(-1)).length);
-                    console.log('ultimo numero', num);
-
-                    numeros.pop()
-
-                    if (num.length > 1) {
-                        num = num.slice(0, -1);
-                        num = Number(num);
-                        console.log('borrar array', num);
-                        numero = num;
-                    }
-
-                    borrarNumeroArray = false;
-                }
-
-                console.log(numeros);
-
-            // si es un operador y se va a borrar
-            } else {
-                operadores.pop();
-                console.log(operadores);
-                texto = texto.slice(0, -1);
-                input.placeholder = texto;
-                pulsarOperador = true;
-                borrarNumeroArray = true;
-            }
-
-            if (input.placeholder == 0) { }
-
-            if (texto.at(-1) == '.') {
-                texto = texto.slice(0, -1);
-                input.placeholder = texto;
-                ponerPunto = true;
-            }
+            borrar();
         }
 
 
@@ -338,9 +294,65 @@ for (let i = 0; i < cajas.length; i++) {
 
 
 // metodo borrar
-// const borrar = () => {
+const borrar = () => {
 
-// }
+    console.log('click borrar');
+
+    // si el ultimo registro es un numero y se va a borrar
+    if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
+        || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
+        || texto.at(-1) == 6 || texto.at(-1) == 7 || texto.at(-1) == 8
+        || texto.at(-1) == 9
+    ) {
+        numero = String(numero);
+        numero = numero.slice(0, -1);
+        numero = Number(numero);
+        console.log(numero);
+
+        texto = texto.slice(0, -1);
+        input.placeholder = texto;
+
+        let num = numeros.at(-1);
+        num = String(num);
+
+        // borrar numero del array
+        if (borrarNumeroArray) {
+
+            console.log(String(numeros.at(-1)).length);
+            console.log('ultimo numero', num);
+
+            numeros.pop()
+
+            if (num.length > 1) {
+                num = num.slice(0, -1);
+                num = Number(num);
+                console.log('borrar array', num);
+                numero = num;
+            }
+
+            borrarNumeroArray = false;
+        }
+
+        console.log(numeros);
+
+        // si es un operador y se va a borrar
+    } else {
+        operadores.pop();
+        console.log(operadores);
+        texto = texto.slice(0, -1);
+        input.placeholder = texto;
+        pulsarOperador = true;
+        borrarNumeroArray = true;
+    }
+
+    if (input.placeholder == 0) { }
+
+    if (texto.at(-1) == '.') {
+        texto = texto.slice(0, -1);
+        input.placeholder = texto;
+        ponerPunto = true;
+    }
+}
 
 
 // metodo para poner valores por defecto

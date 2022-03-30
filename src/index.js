@@ -11,7 +11,6 @@ let numero = '',
     texto = '0',
     borrarNumeroArray = false,
     pulsarIgual = false,
-    // pulsarNumero = true,
     pulsarOperador = false,
     ponerPunto = true,
     resultadoEnPantalla = false,
@@ -76,7 +75,8 @@ const eventoClickCajas = (i) => {
 
                 numero = Number(`${numero}${cajas[i].innerText}`);
                 console.log(numero);
-
+                // console.log(new Intl.NumberFormat().format(numero));
+                
                 texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
 
@@ -129,7 +129,6 @@ const eventoClickCajas = (i) => {
                 pulsarIgual = true;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
-                // pulsarNumero = true;
 
                 console.log(numeros);
                 console.log(operadores);
@@ -232,7 +231,6 @@ const eventoClickCajas = (i) => {
                 resultadoEnPantalla = true;
                 ponerPunto = true;
                 borrarNumeroArray = false;
-                // pulsarNumero = true;
                 console.log('numeros', numeros);
                 console.log('operadores', operadores);
             }
@@ -278,10 +276,8 @@ const eventoClickCajas = (i) => {
                 resultado = 0;
                 operadores = [];
                 resultadoEnPantalla = true;
-                // pulsarOperador = true;
                 ponerPunto = true;
                 borrarNumeroArray = false;
-                // pulsarNumero = true;
                 console.log(numeros);
                 console.log(operadores);
             }
@@ -355,7 +351,6 @@ const borrar = () => {
             borrarNumeroArray = false;
         }
 
-        // pulsarNumero = true
         console.log(numeros);
 
         // si es un operador y se va a borrar
@@ -395,10 +390,8 @@ const resetear = () => {
     input.placeholder = texto;
     pulsarIgual = false;
     pulsarOperador = false;
-    // pulsarNumero = true;
     ponerPunto = true;
     resultadoEnPantalla = false;
     resultado = 0;
     borrarNumeroArray = false;
-    // pulsarNumero = true;
 } 

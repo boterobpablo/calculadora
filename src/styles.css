@@ -20,22 +20,24 @@ html, body{
 
 .calculadora{
     background: #d8e2dc;
-    padding: 0.25rem;
+    padding: 0.8rem;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.25rem;
-    border-radius: 3px;
+    border-radius: 10px;
 }
 
 input{
     grid-column: 1/5;
     height: 6rem;
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     text-align: right;
+    margin-bottom: 5px;
 }
 
 input::placeholder{
     color: #000;
+    margin-right: 2px
 }
 
 input[disabled]{
@@ -44,11 +46,51 @@ input[disabled]{
 
 .caja{
     background: #a3c4f3;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     width: 6rem;
     height: 6rem;
     border-radius: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.borradores{
+    background: #fabfb7;
+}
+
+.operadores{
+    background: #fdf9c4;
+}
+
+.igual{
+    background: #d8f8e1;
+}
+
+@media (max-width: 430px){
+    .caja{
+        font-size: 1.3rem;
+        width: 5rem;
+        height: 5rem;
+    }
+
+    input{
+        height: 5rem;
+        font-size: 1.8rem;
+    }
+    
+}
+
+@media (max-width: 400px){
+    .caja{
+        font-size: 1.1rem;
+        width: 4rem;
+        height: 4rem;
+    }
+
+    input{
+        height: 4rem;
+        font-size: 1.6rem;
+    }
+    
 }

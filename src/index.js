@@ -108,7 +108,7 @@ const eventoClickCajas = (i) => {
 
         // cuando se pulsa un operador
         if (cajas[i].innerText == '+' || cajas[i].innerText == '-'
-            || cajas[i].innerText == '*' || cajas[i].innerText == '/'
+            || cajas[i].innerText == 'x' || cajas[i].innerText == '/'
             || cajas[i].innerText == '^'
         ) {
             if (pulsarOperador) {
@@ -164,8 +164,8 @@ const eventoClickCajas = (i) => {
                 }
 
                 // si viene el operador * en el arreglo de operadores, dar prioridad
-                while (operadores.includes('*')) {
-                    let indiceOperador = operadores.indexOf('*');
+                while (operadores.includes('x')) {
+                    let indiceOperador = operadores.indexOf('x');
                     let res = numeros[indiceOperador] * numeros[indiceOperador + 1];
 
                     numeros.splice(indiceOperador, 1);

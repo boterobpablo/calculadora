@@ -30,7 +30,7 @@ html, body{
 input{
     grid-column: 1/5;
     height: 6rem;
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     text-align: right;
     margin-bottom: 5px;
 }
@@ -47,8 +47,8 @@ input[disabled]{
 .caja{
     background: #a3c4f3;
     font-size: 1.3rem;
-    width: 6rem;
-    height: 6rem;
+    width: 5.8rem;
+    height: 5.8rem;
     border-radius: 3rem;
     display: flex;
     justify-content: center;
@@ -68,15 +68,19 @@ input[disabled]{
 }
 
 @media (max-width: 430px){
+
+    .calculadora{
+        padding: 0.5rem;
+    }
     .caja{
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         width: 5rem;
-        height: 5rem;
+        height: 4.8rem;
     }
 
     input{
-        height: 5rem;
-        font-size: 1.8rem;
+        height: 4.5rem;
+        font-size: 1.4rem;
     }
     
 }
@@ -84,13 +88,13 @@ input[disabled]{
 @media (max-width: 400px){
     .caja{
         font-size: 1.1rem;
-        width: 4rem;
+        width: 4.2rem;
         height: 4rem;
     }
 
     input{
-        height: 4rem;
-        font-size: 1.6rem;
+        height: 3.5rem;
+        font-size: 1.2rem;
     }
     
 }

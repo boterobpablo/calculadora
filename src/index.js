@@ -50,7 +50,7 @@ const eventoClickCajas = (i) => {
 
                 // controlar que el numero no tenga mas de 16 caracteres
                 let cantidadNumeros = String(numero);
-                if (cantidadNumeros.length >= 16) {
+                if (cantidadNumeros.length >= 15) {
                     input.placeholder = 'Número demasiado grande', 1000
                     setTimeout(() => resetear(), 2000)
                     return;
@@ -75,7 +75,6 @@ const eventoClickCajas = (i) => {
 
                 numero = Number(`${numero}${cajas[i].innerText}`);
                 console.log(numero);
-                // console.log(new Intl.NumberFormat().format(numero));
                 
                 texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
@@ -87,7 +86,7 @@ const eventoClickCajas = (i) => {
 
 
         // si se pulsa la tecla .
-        if (cajas[i].innerText == '.') {
+        if (cajas[i].innerText == ',') {
             if (ponerPunto) {
                 if (resultadoEnPantalla) {
                     texto = ``;
@@ -98,7 +97,7 @@ const eventoClickCajas = (i) => {
                 }
 
                 numero = `${numero}.`
-                texto = `${texto}.`
+                texto = `${texto},`
                 input.placeholder = texto;
 
             }
@@ -377,7 +376,6 @@ const borrar = () => {
         input.placeholder = texto
         resetear()
     }
-
 }
 
 

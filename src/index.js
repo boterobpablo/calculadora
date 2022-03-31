@@ -75,7 +75,7 @@ const eventoClickCajas = (i) => {
 
                 numero = Number(`${numero}${cajas[i].innerText}`);
                 console.log(numero);
-                
+
                 texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
 
@@ -85,7 +85,7 @@ const eventoClickCajas = (i) => {
         }
 
 
-        // si se pulsa la tecla .
+        // si se pulsa la tecla ,
         if (cajas[i].innerText == ',') {
             if (ponerPunto) {
                 if (resultadoEnPantalla) {
@@ -148,47 +148,11 @@ const eventoClickCajas = (i) => {
                     numero = '';
                 }
 
-                // si viene el operador ^ en el arreglo de operadores, dar prioridad
-                while (operadores.includes('^')) {
-                    let indiceOperador = operadores.indexOf('^');
-                    let res = Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1]);
-
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 0, res);
-                    operadores.splice(indiceOperador, 1);
-                    console.log('^', numeros);
-                    console.log('^', operadores);
-                    console.log('^', resultado);
-                }
-
-                // si viene el operador * en el arreglo de operadores, dar prioridad
-                while (operadores.includes('x')) {
-                    let indiceOperador = operadores.indexOf('x');
-                    let res = numeros[indiceOperador] * numeros[indiceOperador + 1];
-
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 0, res);
-                    operadores.splice(indiceOperador, 1);
-                    console.log('*', numeros);
-                    console.log('*', operadores);
-                    console.log('*', resultado);
-                }
-
-                // si viene el operador / en el arreglo de operadores, dar prioridad
-                while (operadores.includes('/')) {
-                    let indiceOperador = operadores.indexOf('/');
-                    let res = numeros[indiceOperador] / numeros[indiceOperador + 1];
-
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 1);
-                    numeros.splice(indiceOperador, 0, res);
-                    operadores.splice(indiceOperador, 1);
-                    console.log('/', numeros);
-                    console.log('/', operadores);
-                    console.log('/', resultado);
-                }
+                /* si viene el operador ^, x, / en el arreglo de operadores, 
+                dar prioridad */
+                operacionPrioritaria('^')
+                operacionPrioritaria('x')
+                operacionPrioritaria('/')
 
                 resultado = resultado + numeros[0];
                 console.log(resultado);
@@ -267,7 +231,7 @@ const eventoClickCajas = (i) => {
 
                 texto = `${resultado}`;
                 input.placeholder = texto;
-                console.log('texto',texto);
+                console.log('texto', texto);
 
                 texto == 'NaN'
                     ? pulsarOperador = false
@@ -303,6 +267,31 @@ const eventoClickCajas = (i) => {
 // poner el evento click a cada una de las cajas
 for (let i = 0; i < cajas.length; i++) {
     eventoClickCajas(i);
+}
+
+/* si viene el operador ^, x, / en el arreglo de operadores, 
+    dar prioridad */
+const operacionPrioritaria = (op) => {
+    while (operadores.includes(op)) {
+        let indiceOperador = operadores.indexOf(op);
+        let res = 0;
+
+        if (op == '^') {
+            res = Math.pow(numeros[indiceOperador], numeros[indiceOperador + 1])
+        } else if (op == 'x') {
+            res = numeros[indiceOperador] * numeros[indiceOperador + 1]
+        } else if (op == '/') {
+            res = numeros[indiceOperador] / numeros[indiceOperador + 1]
+        }
+
+        numeros.splice(indiceOperador, 1);
+        numeros.splice(indiceOperador, 1);
+        numeros.splice(indiceOperador, 0, res);
+        operadores.splice(indiceOperador, 1);
+        console.log('^', numeros);
+        console.log('^', operadores);
+        console.log('^', resultado);
+    }
 }
 
 
@@ -371,7 +360,7 @@ const borrar = () => {
         ponerPunto = true;
     }
 
-    if (texto == 'Na') { 
+    if (texto == 'Na') {
         texto = '0'
         input.placeholder = texto
         resetear()

@@ -223,6 +223,7 @@ const eventoClickCajas = (i) => {
                     }
                 }
 
+                resultado = new Intl.NumberFormat().format(resultado);
                 texto = `${resultado}`;
                 input.placeholder = texto;
 

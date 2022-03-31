@@ -341,3 +341,4 @@ const resetear = () => {
     resultado = 0;
     borrarNumeroArray = false;
 } 
+

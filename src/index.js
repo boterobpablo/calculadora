@@ -34,15 +34,12 @@ const eventoClickCajas = (i) => {
 
         }
 
-        console.log('click');
-
         // cuando se pulsa un numero
         if (cajas[i].innerText == 0 || cajas[i].innerText == 1 || cajas[i].innerText == 2
             || cajas[i].innerText == 3 || cajas[i].innerText == 4 || cajas[i].innerText == 5
             || cajas[i].innerText == 6 || cajas[i].innerText == 7 || cajas[i].innerText == 8
             || cajas[i].innerText == 9
         ) {
-            console.log('click en numeros');
 
             /* funcion auto invocada para poder controlar el numero maximo de 
             caracteres por numero */
@@ -74,7 +71,6 @@ const eventoClickCajas = (i) => {
                 }
 
                 numero = Number(`${numero}${cajas[i].innerText}`);
-                console.log(numero);
 
                 texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
@@ -95,11 +91,9 @@ const eventoClickCajas = (i) => {
                     operadores = [];
                     resultadoEnPantalla = false;
                 }
-
                 numero = `${numero}.`
                 texto = `${texto},`
                 input.placeholder = texto;
-
             }
             ponerPunto = false;
         }
@@ -111,7 +105,6 @@ const eventoClickCajas = (i) => {
             || cajas[i].innerText == '^'
         ) {
             if (pulsarOperador) {
-                console.log('click en operadores');
 
                 if (!numero == '') {
                     numeros.push(numero);
@@ -128,10 +121,6 @@ const eventoClickCajas = (i) => {
                 pulsarIgual = true;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
-
-                console.log(numeros);
-                console.log(operadores);
-
             }
         }
 
@@ -140,11 +129,8 @@ const eventoClickCajas = (i) => {
         if (cajas[i].innerText == '=') {
             if (pulsarIgual) {
 
-                console.log('click en igual');
-
                 if (!numero == '') {
                     numeros.push(numero);
-                    console.log(numeros);
                     numero = '';
                 }
 
@@ -155,36 +141,21 @@ const eventoClickCajas = (i) => {
                 operacionPrioritaria('/')
 
                 resultado = resultado + numeros[0];
-                console.log(resultado);
 
+                // cuando la operacion es + o -
                 for (let j = 1; j < numeros.length; j++) {
-
-                    if (operadores[j - 1] == '+') {
+                    if (operadores[j - 1] == '+') 
                         resultado = resultado + numeros[j];
-                        console.log(resultado);
-                    }
-
-                    if (operadores[j - 1] == '-') {
+                    if (operadores[j - 1] == '-')
                         resultado = resultado - numeros[j];
-                        console.log(resultado);
-                    }
-
                 }
 
                 numeros = [];
                 numeros.push(resultado);
 
                 /* manejar decimales, cuando paso de string a number o
-                viceversa, lo hago para usar los metodos de uno o de otro */
-                resultado = String(resultado);
-                if (resultado.includes('.')) {
-                    resultado = Number(resultado);
-                    resultado = resultado.toFixed(5);
-                    resultado = String(resultado);
-                    while (resultado.at(-1) == '0') {
-                        resultado = resultado.slice(0, -1);
-                    }
-                }
+                viceversa, lo hago para usar los metodos de uno o de otro */      
+                manejoDecimales(resultado);
 
                 resultado = new Intl.NumberFormat().format(resultado);
                 texto = `${resultado}`;
@@ -195,8 +166,6 @@ const eventoClickCajas = (i) => {
                 resultadoEnPantalla = true;
                 ponerPunto = true;
                 borrarNumeroArray = false;
-                console.log('numeros', numeros);
-                console.log('operadores', operadores);
             }
             pulsarIgual = false;
         }
@@ -212,26 +181,17 @@ const eventoClickCajas = (i) => {
                 }
 
                 resultado = Math.sqrt(numeros[0]);
-                console.log(resultado);
 
                 numeros = [];
                 numeros.push(resultado);
 
                 /* manejar decimales, cuando paso de string a number o
                 viceversa, lo hago para usar los metodos de uno o de otro */
-                resultado = String(resultado);
-                if (resultado.includes('.')) {
-                    resultado = Number(resultado);
-                    resultado = resultado.toFixed(5);
-                    resultado = String(resultado);
-                    while (resultado.at(-1) == '0') {
-                        resultado = resultado.slice(0, -1);
-                    }
-                }
+                manejoDecimales(resultado);
 
+                resultado = new Intl.NumberFormat().format(resultado);
                 texto = `${resultado}`;
                 input.placeholder = texto;
-                console.log('texto', texto);
 
                 texto == 'NaN'
                     ? pulsarOperador = false
@@ -242,8 +202,6 @@ const eventoClickCajas = (i) => {
                 resultadoEnPantalla = true;
                 ponerPunto = true;
                 borrarNumeroArray = false;
-                console.log(numeros);
-                console.log(operadores);
             }
         }
 
@@ -259,7 +217,6 @@ const eventoClickCajas = (i) => {
             resetear();
         }
 
-
     })
 };
 
@@ -270,9 +227,11 @@ for (let i = 0; i < cajas.length; i++) {
 }
 
 /* si viene el operador ^, x, / en el arreglo de operadores, 
-    dar prioridad */
+dar prioridad */
 const operacionPrioritaria = (op) => {
+
     while (operadores.includes(op)) {
+
         let indiceOperador = operadores.indexOf(op);
         let res = 0;
 
@@ -288,17 +247,27 @@ const operacionPrioritaria = (op) => {
         numeros.splice(indiceOperador, 1);
         numeros.splice(indiceOperador, 0, res);
         operadores.splice(indiceOperador, 1);
-        console.log('^', numeros);
-        console.log('^', operadores);
-        console.log('^', resultado);
     }
+}
+
+
+// manejo de decimales
+const manejoDecimales = (resultado) => {
+    resultado = String(resultado);
+    if (resultado.includes('.')) {
+        resultado = Number(resultado);
+        resultado = resultado.toFixed(5);
+        resultado = String(resultado);
+        while (resultado.at(-1) == '0') {
+            resultado = resultado.slice(0, -1);
+        }
+    }
+    return resultado;
 }
 
 
 // metodo borrar
 const borrar = () => {
-
-    console.log('click borrar');
 
     // si el ultimo registro es un numero y se va a borrar
     if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
@@ -309,7 +278,6 @@ const borrar = () => {
         numero = String(numero);
         numero = numero.slice(0, -1);
         numero = Number(numero);
-        console.log(numero);
 
         texto = texto.slice(0, -1);
         input.placeholder = texto;
@@ -324,28 +292,18 @@ const borrar = () => {
 
         // borrar numero del array
         if (borrarNumeroArray) {
-
-            console.log(String(numeros.at(-1)).length);
-            console.log('ultimo numero', num);
-
             numeros.pop()
-
             if (num.length > 1) {
                 num = num.slice(0, -1);
                 num = Number(num);
-                console.log('borrar array', num);
                 numero = num;
             }
-
             borrarNumeroArray = false;
         }
 
-        console.log(numeros);
-
-        // si es un operador y se va a borrar
+    // si es un operador y se va a borrar
     } else {
         operadores.pop();
-        console.log(operadores);
         texto = texto.slice(0, -1);
         input.placeholder = texto;
         pulsarOperador = true;

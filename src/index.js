@@ -189,7 +189,7 @@ const eventoClickCajas = (i) => {
                 viceversa, lo hago para usar los metodos de uno o de otro */
                 manejoDecimales(resultado);
 
-                resultado = new Intl.NumberFormat('en-IN').format(resultado);
+                resultado = new Intl.NumberFormat('es-CO').format(resultado);
                 texto = `${resultado}`;
                 input.placeholder = texto;
 

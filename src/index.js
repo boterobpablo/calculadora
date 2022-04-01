@@ -122,6 +122,7 @@ const eventoClickCajas = (i) => {
                 pulsarIgual = true;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
+                borrarNumeroArray = false;
             }
         }
         

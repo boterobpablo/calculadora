@@ -270,6 +270,12 @@ const manejoDecimales = (resultado) => {
 // metodo borrar
 const borrar = () => {
 
+    if(resultadoEnPantalla){
+        texto = texto.replace(/[.]/g,'');
+        input.placeholder = texto
+        resultadoEnPantalla = false;
+    }
+
     // si el ultimo registro es un numero y se va a borrar
     if (texto.at(-1) == 0 || texto.at(-1) == 1 || texto.at(-1) == 2
         || texto.at(-1) == 3 || texto.at(-1) == 4 || texto.at(-1) == 5
@@ -325,11 +331,6 @@ const borrar = () => {
         resetear()
     }
     
-    if(resultadoEnPantalla){
-        texto = texto.replace(/[.]/g,'');
-        input.placeholder = texto
-        resultadoEnPantalla = false;
-    }
 }
 
 

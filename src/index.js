@@ -78,9 +78,10 @@ const eventoClickCajas = (i) => {
                 pulsarOperador = true;
                 pulsarIgual = true;
             })();
+
         }
-
-
+        
+        
         // si se pulsa la tecla ,
         if (cajas[i].innerText == ',') {
             if (ponerPunto) {
@@ -98,10 +99,10 @@ const eventoClickCajas = (i) => {
             ponerPunto = false;
         }
 
-
+        
         // cuando se pulsa un operador
         if (cajas[i].innerText == '+' || cajas[i].innerText == '-'
-            || cajas[i].innerText == 'x' || cajas[i].innerText == '/'
+        || cajas[i].innerText == 'x' || cajas[i].innerText == '/'
             || cajas[i].innerText == '^'
         ) {
             if (pulsarOperador) {
@@ -110,21 +111,23 @@ const eventoClickCajas = (i) => {
                     numeros.push(numero);
                     numero = '';
                 }
-
+                
                 texto = `${texto}${cajas[i].innerText}`;
                 input.placeholder = texto;
 
                 operador = cajas[i].innerText;
                 operadores.push(operador);
-
+                
                 pulsarOperador = false;
                 pulsarIgual = true;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
             }
+            console.log(numeros);
+            console.log(operadores);
         }
-
-
+        
+        
         // cuando se pulsa igual
         if (cajas[i].innerText == '=') {
             if (pulsarIgual) {
@@ -157,7 +160,7 @@ const eventoClickCajas = (i) => {
                 viceversa, lo hago para usar los metodos de uno o de otro */      
                 manejoDecimales(resultado);
 
-                resultado = new Intl.NumberFormat().format(resultado);
+                resultado = new Intl.NumberFormat('es-CO').format(resultado);
                 texto = `${resultado}`;
                 input.placeholder = texto;
 
@@ -165,7 +168,7 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = true;
                 ponerPunto = true;
-                borrarNumeroArray = false;
+                borrarNumeroArray = true;
             }
             pulsarIgual = false;
         }
@@ -301,18 +304,21 @@ const borrar = () => {
             borrarNumeroArray = false;
         }
 
-    // si es un operador y se va a borrar
+        console.log(numeros);
+        
+        // si es un operador y se va a borrar
     } else {
         operadores.pop();
         texto = texto.slice(0, -1);
         input.placeholder = texto;
         pulsarOperador = true;
         borrarNumeroArray = true;
+        console.log(operadores);
     }
 
     if (input.placeholder == 0) { }
 
-    if (texto.at(-1) == '.') {
+    if (texto.at(-1) == ',') {
         texto = texto.slice(0, -1);
         input.placeholder = texto;
         ponerPunto = true;
@@ -322,6 +328,12 @@ const borrar = () => {
         texto = '0'
         input.placeholder = texto
         resetear()
+    }
+    
+    if(resultadoEnPantalla){
+        texto = texto.replace(/[.]/g,'');
+        input.placeholder = texto
+        resultadoEnPantalla = false;
     }
 }
 

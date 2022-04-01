@@ -123,8 +123,6 @@ const eventoClickCajas = (i) => {
                 resultadoEnPantalla = false;
                 ponerPunto = true;
             }
-            console.log(numeros);
-            console.log(operadores);
         }
         
         
@@ -303,17 +301,14 @@ const borrar = () => {
             }
             borrarNumeroArray = false;
         }
-
-        console.log(numeros);
         
-        // si es un operador y se va a borrar
+    // si es un operador y se va a borrar
     } else {
         operadores.pop();
         texto = texto.slice(0, -1);
         input.placeholder = texto;
         pulsarOperador = true;
         borrarNumeroArray = true;
-        console.log(operadores);
     }
 
     if (input.placeholder == 0) { }

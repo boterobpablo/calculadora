@@ -122,6 +122,7 @@ const eventoClickCajas = (i) => {
                 pulsarIgual = true;
                 resultadoEnPantalla = false;
                 ponerPunto = true;
+                borrarNumeroArray = false;
             }
             console.log(numeros);
             console.log(operadores);
@@ -204,7 +205,7 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = true;
                 ponerPunto = true;
-                borrarNumeroArray = false;
+                borrarNumeroArray = true;
             }
         }
 

@@ -202,7 +202,7 @@ const eventoClickCajas = (i) => {
                 operadores = [];
                 resultadoEnPantalla = true;
                 ponerPunto = true;
-                borrarNumeroArray = false;
+                borrarNumeroArray = true;
             }
         }
 
